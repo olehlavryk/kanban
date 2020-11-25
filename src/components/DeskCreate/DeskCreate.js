@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Icon16Add from "@vkontakte/icons/dist/16/add";
 import { Button, Card, FormLayout, Input } from "@vkontakte/vkui";
+import firebase from "firebase/app";
+import PropTypes from "prop-types";
 
 const modes = {
   button: "button",
@@ -12,7 +14,7 @@ const statuses = {
   error: "error",
 };
 
-const DeskCreate = () => {
+const DeskCreate = ({ onCreate }) => {
   const [mode, setMode] = useState(modes.button);
   const [name, setName] = useState("");
   const [status, setStatus] = useState(statuses.default);
@@ -36,8 +38,24 @@ const DeskCreate = () => {
       return;
     }
 
-    // create new Desk
-    console.log("create new Desk");
+    // create new desk
+    // TODO move to API layer
+    const db = firebase.firestore();
+    db.collection("desks")
+      .add({
+        name,
+      })
+      .then((docRef) => docRef.get())
+      .then((doc) => {
+        return onCreate({
+          id: doc.id,
+          ...doc.data(),
+        });
+      })
+      .then(resetForm)
+      .catch(function (error) {
+        console.error("Error writing document: ", error);
+      });
 
     resetForm();
   };
@@ -78,6 +96,10 @@ const DeskCreate = () => {
       </FormLayout>
     </Card>
   );
+};
+
+DeskCreate.propTypes = {
+  onCreate: PropTypes.func.isRequired,
 };
 
 export default DeskCreate;
