@@ -1,12 +1,20 @@
 import React from "react";
-import { Button } from "@vkontakte/vkui";
+import { PanelHeader, Div } from "@vkontakte/vkui";
+
 import PropTypes from "prop-types";
+import DeskList from "./../DeskList/DeskList";
+import DeskCreate from "../DeskCreate/DeskCreate";
 
 const Desks = ({ onChangePanel }) => {
   return (
     <>
-      <div>Hello, I'm panel with desks</div>
-      <Button onClick={onChangePanel}>Go to columns</Button>
+      <PanelHeader>My Desks</PanelHeader>
+
+      <Div>
+        <DeskCreate />
+      </Div>
+
+      <DeskList />
     </>
   );
 };
