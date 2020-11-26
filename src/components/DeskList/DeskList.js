@@ -1,9 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { CardGrid } from "@vkontakte/vkui";
 import PropTypes from "prop-types";
 import DeskItem from "./../DeskItem/DeskItem";
+import firebase from "firebase/app";
 
-const DeskList = ({ desks, onDelete }) => {
+const DeskList = ({ desks, onDelete, onLoadDesks }) => {
+  useEffect(() => {
+    // todo move to API layer
+    const db = firebase.firestore();
+    db.collection("desks")
+      .get()
+      .then((querySnapshot) => {
+        const desks = [];
+
+        querySnapshot.forEach((desk) => {
+          desks.push({
+            id: desk.id,
+            name: desk.data().name,
+          });
+        });
+
+        onLoadDesks(desks);
+      });
+  }, []);
+
   if (!desks.length) return null;
 
   return (
@@ -25,6 +45,7 @@ DeskList.propTypes = {
     })
   ).isRequired,
   onDelete: PropTypes.func.isRequired,
+  onLoadDesks: PropTypes.func.isRequired,
 };
 
 export default DeskList;
