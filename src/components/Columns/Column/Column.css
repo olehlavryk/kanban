@@ -1,0 +1,11 @@
+.Gallery__slide {
+  border-radius: 10px;
+}
+
+.Column {
+  padding: 0 0 10px 0;
+}
+
+.Card__in > div {
+  margin-right: 12px;
+}

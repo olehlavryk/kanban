@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { PanelHeader, Div } from "@vkontakte/vkui";
 
 import PropTypes from "prop-types";
-import DeskList from "./../DeskList/DeskList";
+import DeskList from "../DeskList/DeskList";
 import DeskCreate from "../DeskCreate/DeskCreate";
 
 const Desks = () => {

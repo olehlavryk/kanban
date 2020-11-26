@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { CardGrid } from "@vkontakte/vkui";
+import { CardGrid, Div } from "@vkontakte/vkui";
 import PropTypes from "prop-types";
-import DeskItem from "./../DeskItem/DeskItem";
+import DeskItem from "../DeskItem/DeskItem";
 import firebase from "firebase/app";
 
 const DeskList = ({ desks, onDelete, onLoadDesks }) => {
@@ -24,7 +24,9 @@ const DeskList = ({ desks, onDelete, onLoadDesks }) => {
       });
   }, []);
 
-  if (!desks.length) return null;
+  if (!desks.length) {
+    return <Div style={{ textAlign: "center" }}>There are no desks yet!</Div>;
+  }
 
   return (
     <CardGrid>

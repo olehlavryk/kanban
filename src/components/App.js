@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View, Panel } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
-import Desks from "./Desks/Desks";
-import Columns from "./Columns/Columns";
+import Desks from "./Desks/Desks/Desks";
+import Columns from "./Columns/Columns/Columns";
 
 const panel = {
   desks: "desks",
@@ -10,7 +10,7 @@ const panel = {
 };
 
 const App = () => {
-  const [activePanel, setActivePanel] = useState(panel.desks);
+  const [activePanel, setActivePanel] = useState(panel.columns);
 
   return (
     <View activePanel={activePanel}>
