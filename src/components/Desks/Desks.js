@@ -28,6 +28,9 @@ const Desks = () => {
   }, []);
 
   const handlerAddDesk = (desk) => setDesks([...desks, desk]);
+  const handlerRemoveDesk = (deskId) => {
+    setDesks(desks.filter(({ id }) => id !== deskId));
+  };
 
   return (
     <>
@@ -37,7 +40,7 @@ const Desks = () => {
         <DeskCreate onCreate={handlerAddDesk} />
       </Div>
 
-      <DeskList desks={desks} />
+      <DeskList desks={desks} onDelete={handlerRemoveDesk} />
     </>
   );
 };
