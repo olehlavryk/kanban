@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import Icon16Add from "@vkontakte/icons/dist/16/add";
 import { Button, Card, FormLayout, Input } from "@vkontakte/vkui";
-import firebase from "firebase/app";
 import PropTypes from "prop-types";
-import { CreateForm } from "./../../Form/CreateForm/CreateForm";
 
 const modes = {
   button: "button",
@@ -15,7 +13,7 @@ const statuses = {
   error: "error",
 };
 
-const DeskCreate = ({ onCreate }) => {
+const CreateForm = ({ onSubmit, placeholder, actionTitle }) => {
   const [mode, setMode] = useState(modes.button);
   const [name, setName] = useState("");
   const [status, setStatus] = useState(statuses.default);
@@ -28,39 +26,6 @@ const DeskCreate = ({ onCreate }) => {
     setMode(modes.button);
   };
 
-  const handleCreateDesk = (event) => {
-    if (event) {
-      event.preventDefault();
-    }
-
-    if (!name.trim().length) {
-      setStatus(statuses.error);
-      setErrorMsg("Desk name is not valid!");
-      return;
-    }
-
-    // create new desk
-    // TODO move to API layer
-    const db = firebase.firestore();
-    db.collection("desks")
-      .add({
-        name,
-      })
-      .then((docRef) => docRef.get())
-      .then((doc) => {
-        return onCreate({
-          id: doc.id,
-          ...doc.data(),
-        });
-      })
-      .then(resetForm)
-      .catch(function (error) {
-        console.error("Error writing document: ", error);
-      });
-
-    resetForm();
-  };
-
   if (mode === modes.button) {
     return (
       <Button
@@ -68,7 +33,7 @@ const DeskCreate = ({ onCreate }) => {
         before={<Icon16Add />}
         size="xl"
       >
-        Create Desk
+        {actionTitle}
       </Button>
     );
   }
@@ -83,12 +48,12 @@ const DeskCreate = ({ onCreate }) => {
           }}
           value={name}
           status={status}
-          placeholder="Enter desk name"
+          placeholder={placeholder}
           bottom={errorMsg}
         />
         <div style={{ display: "flex" }}>
-          <Button size="l" stretched onClick={handleCreateDesk}>
-            Create Desk
+          <Button size="l" stretched onClick={onSubmit}>
+            {actionTitle}
           </Button>
           <Button size="l" stretched mode="outline" onClick={resetForm}>
             Cancel
@@ -99,8 +64,10 @@ const DeskCreate = ({ onCreate }) => {
   );
 };
 
-DeskCreate.propTypes = {
-  onCreate: PropTypes.func.isRequired,
+CreateForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  actionTitle: PropTypes.string.isRequired,
 };
 
-export default DeskCreate;
+export default CreateForm;

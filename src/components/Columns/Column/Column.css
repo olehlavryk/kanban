@@ -2,10 +2,10 @@
   border-radius: 10px;
 }
 
-.Column {
-  padding: 0 0 10px 0;
+.CardGrid {
+  box-sizing: border-box;
 }
 
-.Card__in > div {
-  margin-right: 12px;
+.Column {
+  padding: 0 0 10px 0;
 }

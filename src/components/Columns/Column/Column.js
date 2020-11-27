@@ -1,6 +1,7 @@
 import React from "react";
-import { Group, CardGrid, Card, Header, Div } from "@vkontakte/vkui";
+import { CardGrid, Card, Header, Div } from "@vkontakte/vkui";
 
+import ColumnCard from "./../ColumnCard/ColumnCard";
 import "./Column.css";
 
 const Column = () => {
@@ -10,15 +11,7 @@ const Column = () => {
         <Card size="l" className="Column">
           <Header mode="secondary">Column name</Header>
           <CardGrid>
-            <Card size="l" mode="outline">
-              <Div>Card 1</Div>
-            </Card>
-            <Card size="l" mode="outline">
-              <Div>Card 2</Div>
-            </Card>
-            <Card size="l" mode="outline">
-              <Div>Card 2</Div>
-            </Card>
+            <ColumnCard>Hello I am card!</ColumnCard>
           </CardGrid>
         </Card>
       </CardGrid>

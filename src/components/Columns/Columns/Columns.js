@@ -42,13 +42,15 @@ const Columns = () => {
       <PanelHeader>Desk name</PanelHeader>
 
       <Gallery
-        slideWidth="85%"
+        slideWidth="100%"
         align="left"
         style={{ height: "100%", marginTop: 20 }}
       >
         {columns.map(({ id }) => {
           return <Column key={id} />;
         })}
+        {/* Column for creating */}
+        <Column />
       </Gallery>
     </>
   );
