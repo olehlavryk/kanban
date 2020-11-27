@@ -26,6 +26,20 @@ const CreateForm = ({ onSubmit, placeholder, actionTitle }) => {
     setMode(modes.button);
   };
 
+  const handleOnSubmit = (event) => {
+    if (event) {
+      event.preventDefault();
+    }
+
+    if (!name.trim().length) {
+      setStatus(statuses.error);
+      setErrorMsg("Not valid!");
+      return;
+    }
+
+    onSubmit(name).then(resetForm);
+  };
+
   if (mode === modes.button) {
     return (
       <Button
@@ -40,7 +54,7 @@ const CreateForm = ({ onSubmit, placeholder, actionTitle }) => {
 
   return (
     <Card size="l" mode="shadow">
-      <FormLayout onSubmit={handleCreateDesk}>
+      <FormLayout onSubmit={handleOnSubmit}>
         <Input
           autoFocus
           onChange={(e) => {
@@ -52,7 +66,7 @@ const CreateForm = ({ onSubmit, placeholder, actionTitle }) => {
           bottom={errorMsg}
         />
         <div style={{ display: "flex" }}>
-          <Button size="l" stretched onClick={onSubmit}>
+          <Button size="l" stretched>
             {actionTitle}
           </Button>
           <Button size="l" stretched mode="outline" onClick={resetForm}>
