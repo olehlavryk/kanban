@@ -10,7 +10,7 @@ const panel = {
 };
 
 const App = () => {
-  const [activePanel, setActivePanel] = useState(panel.desks);
+  const [activePanel, setActivePanel] = useState(panel.columns);
 
   return (
     <View activePanel={activePanel}>

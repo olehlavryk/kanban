@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { PanelHeader, Spinner, Gallery } from "@vkontakte/vkui";
 import firebase from "firebase/app";
 import Column from "./../Column/Column";
+import ColumnCreate from "./../ColumnCreate/ColumnCreate";
 
 const Columns = () => {
   const [columns, setColumns] = useState([]);
+
+  const handlerAddColumn = (column) => setColumns([...columns, column]);
 
   useEffect(() => {
     // todo move to API layer
@@ -46,11 +49,11 @@ const Columns = () => {
         align="left"
         style={{ height: "100%", marginTop: 20 }}
       >
-        {columns.map(({ id }) => {
-          return <Column key={id} />;
+        {columns.map(({ id, name }) => {
+          return <Column key={id} {...{ name }} />;
         })}
         {/* Column for creating */}
-        <Column />
+        <ColumnCreate onCreate={handlerAddColumn} />
       </Gallery>
     </>
   );
