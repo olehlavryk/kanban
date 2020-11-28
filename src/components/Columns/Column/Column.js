@@ -1,9 +1,10 @@
 import React from "react";
 import { CardGrid, Card, Header, Button } from "@vkontakte/vkui";
 import PropTypes from "prop-types";
-import ColumnCard from "./../ColumnCard/ColumnCard";
-import "./Column.css";
 import firebase from "firebase/app";
+import ColumnCard from "./../ColumnCard/ColumnCard";
+import Cards from "./../../Cards/Cards";
+import "./Column.css";
 
 const Column = ({ id, name, onDelete }) => {
   const deleteColumn = (event, id) => {
@@ -35,7 +36,7 @@ const Column = ({ id, name, onDelete }) => {
           </div>
 
           <CardGrid>
-            <ColumnCard>Hello I am card!</ColumnCard>
+            <Cards />
           </CardGrid>
         </Card>
       </CardGrid>
