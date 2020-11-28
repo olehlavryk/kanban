@@ -1,15 +1,39 @@
 import React from "react";
-import { CardGrid, Card, Header } from "@vkontakte/vkui";
+import { CardGrid, Card, Header, Button } from "@vkontakte/vkui";
 import PropTypes from "prop-types";
 import ColumnCard from "./../ColumnCard/ColumnCard";
 import "./Column.css";
+import firebase from "firebase/app";
 
-const Column = ({ name }) => {
+const Column = ({ id, name, onDelete }) => {
+  const deleteColumn = (event, id) => {
+    if (event) event.preventDefault();
+
+    // todo move removing to API layer
+    const db = firebase.firestore();
+
+    db.collection("columns")
+      .doc(id)
+      .delete()
+      .then(() => onDelete(id))
+      .catch(console.error);
+  };
+
   return (
     <>
       <CardGrid>
         <Card size="l" className="Column">
-          <Header mode="secondary">{name}</Header>
+          <div className="Column__header">
+            <Header mode="secondary">{name}</Header>
+            <Button
+              mode="tertiary"
+              size="l"
+              onClick={(e) => deleteColumn(e, id)}
+            >
+              x
+            </Button>
+          </div>
+
           <CardGrid>
             <ColumnCard>Hello I am card!</ColumnCard>
           </CardGrid>
@@ -20,7 +44,9 @@ const Column = ({ name }) => {
 };
 
 Column.propTypes = {
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default Column;

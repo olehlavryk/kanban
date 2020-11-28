@@ -9,3 +9,9 @@
 .Column {
   padding: 0 0 10px 0;
 }
+
+.Column__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

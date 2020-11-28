@@ -8,6 +8,9 @@ const Columns = () => {
   const [columns, setColumns] = useState([]);
 
   const handlerAddColumn = (column) => setColumns([...columns, column]);
+  const handlerRemoveColumn = (columnId) => {
+    setColumns(columns.filter(({ id }) => id !== columnId));
+  };
 
   useEffect(() => {
     // todo move to API layer
@@ -50,7 +53,14 @@ const Columns = () => {
         style={{ height: "100%", marginTop: 20 }}
       >
         {columns.map(({ id, name }) => {
-          return <Column key={id} {...{ name }} />;
+          return (
+            <Column
+              key={id}
+              name={name}
+              id={id}
+              onDelete={handlerRemoveColumn}
+            />
+          );
         })}
         {/* Column for creating */}
         <ColumnCreate onCreate={handlerAddColumn} />
