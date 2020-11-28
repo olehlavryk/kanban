@@ -2,7 +2,7 @@ import React from "react";
 import { CardGrid, Card, Header, Button } from "@vkontakte/vkui";
 import PropTypes from "prop-types";
 import firebase from "firebase/app";
-import Cards from "./../../Cards/Cards";
+import Cards from "../../Cards/Cards/Cards";
 import "./Column.css";
 
 const Column = ({ id, name, onDelete }) => {

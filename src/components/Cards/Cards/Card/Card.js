@@ -1,10 +1,10 @@
 import React from "react";
-import { Card, Div, Button } from "@vkontakte/vkui";
+import { Card as Ticket, Div, Button } from "@vkontakte/vkui";
 import PropTypes from "prop-types";
 import firebase from "firebase/app";
-import "./ColumnCard.css";
+import "./Card.css";
 
-const ColumnCard = ({ children, id, onDelete }) => {
+const Card = ({ children, id, onDelete }) => {
   const deleteCard = (event, id) => {
     if (event) event.preventDefault();
 
@@ -19,21 +19,21 @@ const ColumnCard = ({ children, id, onDelete }) => {
   };
 
   return (
-    <Card size="l" mode="outline" className="ColumnCard">
+    <Ticket size="l" mode="outline" className="ColumnCard">
       <div className="ColumnCard__wrapper">
         <Div>{children}</Div>
         <Button mode="tertiary" size="l" onClick={(e) => deleteCard(e, id)}>
           x
         </Button>
       </div>
-    </Card>
+    </Ticket>
   );
 };
 
-ColumnCard.propTypes = {
+Card.propTypes = {
   id: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 
-export default ColumnCard;
+export default Card;

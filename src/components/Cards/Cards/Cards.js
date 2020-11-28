@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import firebase from "firebase/app";
-import ColumnCard from "./../Columns/ColumnCard/ColumnCard";
+import Card from "./Card/Card";
 
 const Cards = () => {
   const [cards, setCards] = useState([]);
@@ -34,9 +34,9 @@ const Cards = () => {
   return (
     <>
       {cards.map(({ id, name }) => (
-        <ColumnCard key={id} id={id} onDelete={handlerRemoveCard}>
+        <Card key={id} id={id} onDelete={handlerRemoveCard}>
           {name}
-        </ColumnCard>
+        </Card>
       ))}
     </>
   );
