@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import firebase from "firebase/app";
 import Card from "./Card/Card";
+import CardCreate from "./CardCreate/CardCreate";
 
 const Cards = () => {
   const [cards, setCards] = useState([]);
-
+  const handlerAddCard = (card) => setCards([...cards, card]);
   const handlerRemoveCard = (cardId) => {
     setCards(cards.filter(({ id }) => id !== cardId));
   };
@@ -38,6 +39,11 @@ const Cards = () => {
           {name}
         </Card>
       ))}
+
+      <CardCreate
+        style={{ marginTop: 10, display: "inline-block" }}
+        onCreate={handlerAddCard}
+      />
     </>
   );
 };

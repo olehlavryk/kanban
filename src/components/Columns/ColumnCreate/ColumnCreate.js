@@ -32,7 +32,7 @@ const ColumnCreate = ({ onCreate }) => {
     <Div style={{ boxSizing: "border-box" }}>
       <CreateForm
         onSubmit={handleCreateColumn}
-        placeholder="Enter name of column"
+        placeholder="Enter column name"
         actionTitle="Create column"
       />
     </Div>

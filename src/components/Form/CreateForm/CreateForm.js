@@ -13,7 +13,7 @@ const statuses = {
   error: "error",
 };
 
-const CreateForm = ({ onSubmit, placeholder, actionTitle }) => {
+const CreateForm = ({ onSubmit, placeholder, actionTitle, ...props }) => {
   const [mode, setMode] = useState(modes.button);
   const [name, setName] = useState("");
   const [status, setStatus] = useState(statuses.default);
@@ -46,6 +46,7 @@ const CreateForm = ({ onSubmit, placeholder, actionTitle }) => {
         onClick={() => setMode(modes.form)}
         before={<Icon16Add />}
         size="xl"
+        {...props}
       >
         {actionTitle}
       </Button>
