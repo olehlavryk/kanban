@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { CardGrid } from "@vkontakte/vkui";
 import firebase from "firebase/app";
 import ColumnCard from "./../Columns/ColumnCard/ColumnCard";
 
 const Cards = () => {
   const [cards, setCards] = useState([]);
+
+  const handlerRemoveCard = (cardId) => {
+    setCards(cards.filter(({ id }) => id !== cardId));
+  };
 
   useEffect(() => {
     // todo move to API layer
@@ -16,10 +19,10 @@ const Cards = () => {
         const cards = [];
 
         querySnapshot.forEach((desk) => {
-          const { deskId, name } = desk.data();
+          const { columnId, name } = desk.data();
           cards.push({
             id: desk.id,
-            deskId,
+            columnId,
             name,
           });
         });
@@ -29,13 +32,13 @@ const Cards = () => {
   }, []);
 
   return (
-    <CardGrid>
+    <>
       {cards.map(({ id, name }) => (
-        <ColumnCard key={id} id={id}>
+        <ColumnCard key={id} id={id} onDelete={handlerRemoveCard}>
           {name}
         </ColumnCard>
       ))}
-    </CardGrid>
+    </>
   );
 };
 
