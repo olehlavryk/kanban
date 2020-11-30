@@ -10,23 +10,53 @@ const panel = {
 };
 
 const App = () => {
-  const [activePanel, setActivePanel] = useState(panel.columns);
+  const [activePanel, setActivePanel] = useState(panel.desks);
+  const [activeDesk, setActiveDesk] = useState(null);
+
+  const goToColumns = (deskId) => {
+    setActiveDesk(desks.find(({ id }) => id === deskId));
+    setActivePanel(panel.columns);
+  };
+  const goToDesks = () => setActivePanel(panel.desks);
+
+  // desks
+  const [desks, setDesks] = useState([]);
+
+  const handlerAddDesk = (desk) => setDesks([...desks, desk]);
+  const handlerRemoveDesk = (deskId) => {
+    setDesks(desks.filter(({ id }) => id !== deskId));
+  };
+
+  // columns
+  const [columns, setColumns] = useState([]);
+
+  const handlerAddColumn = (column) => setColumns([...columns, column]);
+  const handlerRemoveColumn = (columnId) => {
+    setColumns(columns.filter(({ id }) => id !== columnId));
+  };
 
   return (
     <View activePanel={activePanel}>
       <Panel id={panel.desks}>
         <Desks
-          onChangePanel={() => {
-            setActivePanel(panel.columns);
-          }}
+          onChangePanel={goToColumns}
+          setDesks={setDesks}
+          addDesk={handlerAddDesk}
+          removeDesk={handlerRemoveDesk}
+          desks={desks}
         />
       </Panel>
       <Panel id={panel.columns}>
-        <Columns
-          onChangePanel={() => {
-            setActivePanel(panel.desks);
-          }}
-        />
+        {activeDesk && (
+          <Columns
+            desk={activeDesk}
+            goBack={goToDesks}
+            AddColumn={handlerAddColumn}
+            columns={columns}
+            removeColumn={handlerRemoveColumn}
+            setColumns={setColumns}
+          />
+        )}
       </Panel>
     </View>
   );

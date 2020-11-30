@@ -3,9 +3,7 @@ import firebase from "firebase/app";
 import PropTypes from "prop-types";
 import CreateForm from "../../../Form/CreateForm/CreateForm";
 
-const CardCreate = ({ ...props }) => {
-  const { onCreate } = props;
-
+const CardCreate = ({ onCreate, style, columnId }) => {
   const handleCreateDesk = (name) => {
     // create new desk
     // TODO move to API layer
@@ -14,6 +12,7 @@ const CardCreate = ({ ...props }) => {
       .collection("cards")
       .add({
         name,
+        columnId,
       })
       .then((docRef) => docRef.get())
       .then((doc) => {
@@ -32,13 +31,15 @@ const CardCreate = ({ ...props }) => {
       onSubmit={handleCreateDesk}
       placeholder="Enter card name"
       actionTitle="Create Card"
-      {...props}
+      style={style}
     />
   );
 };
 
 CardCreate.propTypes = {
   onCreate: PropTypes.func.isRequired,
+  style: PropTypes.object,
+  columnId: PropTypes.string.isRequired,
 };
 
 export default CardCreate;

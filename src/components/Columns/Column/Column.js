@@ -35,7 +35,7 @@ const Column = ({ id, name, onDelete }) => {
           </div>
 
           <CardGrid>
-            <Cards />
+            <Cards columnId={id} />
           </CardGrid>
         </Card>
       </CardGrid>

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import firebase from "firebase/app";
-import Card from "./Card/Card";
+import Card from "./../Card/Card";
+import PropTypes from "prop-types";
 import CardCreate from "./CardCreate/CardCreate";
 
-const Cards = () => {
+const Cards = ({ columnId }) => {
   const [cards, setCards] = useState([]);
   const handlerAddCard = (card) => setCards([...cards, card]);
   const handlerRemoveCard = (cardId) => {
@@ -15,6 +16,7 @@ const Cards = () => {
     const db = firebase.firestore();
 
     db.collection("cards")
+      .where("columnId", "==", columnId)
       .get()
       .then((querySnapshot) => {
         const cards = [];
@@ -30,7 +32,7 @@ const Cards = () => {
 
         setCards(cards);
       });
-  }, []);
+  }, [columnId]);
 
   return (
     <>
@@ -41,11 +43,16 @@ const Cards = () => {
       ))}
 
       <CardCreate
+        columnId={columnId}
         style={{ marginTop: 10, display: "inline-block" }}
         onCreate={handlerAddCard}
       />
     </>
   );
+};
+
+Cards.propTypes = {
+  columnId: PropTypes.string.isRequired,
 };
 
 export default Cards;

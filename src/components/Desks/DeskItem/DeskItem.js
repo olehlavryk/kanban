@@ -4,7 +4,7 @@ import { Card, Div, Button } from "@vkontakte/vkui";
 import "./DeskItem.css";
 import firebase from "firebase/app";
 
-const DeskItem = ({ id, children, onDelete }) => {
+const DeskItem = ({ id, children, onDelete, onClick }) => {
   const deleteItem = (event, id) => {
     if (event) {
       event.preventDefault();
@@ -21,7 +21,7 @@ const DeskItem = ({ id, children, onDelete }) => {
   };
 
   return (
-    <Card size="l">
+    <Card size="l" onClick={onClick}>
       <Div className="DeskItem">
         {children}
         <Button mode="tertiary" size="l" onClick={(e) => deleteItem(e, id)}>
@@ -39,6 +39,7 @@ DeskItem.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
   ]),
   onDelete: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default DeskItem;

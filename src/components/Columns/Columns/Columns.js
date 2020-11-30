@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { PanelHeader, Spinner, Gallery } from "@vkontakte/vkui";
+import React, { useEffect } from "react";
+import { PanelHeader, PanelHeaderBack, Gallery } from "@vkontakte/vkui";
+import PropTypes from "prop-types";
 import firebase from "firebase/app";
 import Column from "./../Column/Column";
 import ColumnCreate from "./../ColumnCreate/ColumnCreate";
 
-const Columns = () => {
-  const [columns, setColumns] = useState([]);
-
-  const handlerAddColumn = (column) => setColumns([...columns, column]);
-  const handlerRemoveColumn = (columnId) => {
-    setColumns(columns.filter(({ id }) => id !== columnId));
-  };
-
+const Columns = ({
+  goBack,
+  setColumns,
+  columns,
+  removeColumn,
+  AddColumn,
+  desk,
+}) => {
   useEffect(() => {
     // todo move to API layer
     const db = firebase.firestore();
 
     db.collection("columns")
+      .where("deskId", "==", desk.id)
       .get()
       .then((querySnapshot) => {
         const columns = [];
@@ -32,20 +34,16 @@ const Columns = () => {
 
         setColumns(columns);
       });
-  }, []);
+  }, [setColumns, desk.id]);
 
-  if (!columns.length) {
-    return (
-      <>
-        <PanelHeader>Desk name</PanelHeader>
-        <Spinner size="medium" style={{ marginTop: 20 }} />
-      </>
-    );
-  }
+  // todo case loading
+  // todo case if Columns none
 
   return (
     <>
-      <PanelHeader>Desk name</PanelHeader>
+      <PanelHeader left={<PanelHeaderBack onClick={goBack} />}>
+        {desk.name}
+      </PanelHeader>
 
       <Gallery
         slideWidth="100%"
@@ -54,19 +52,32 @@ const Columns = () => {
       >
         {columns.map(({ id, name }) => {
           return (
-            <Column
-              key={id}
-              name={name}
-              id={id}
-              onDelete={handlerRemoveColumn}
-            />
+            <Column key={id} name={name} id={id} onDelete={removeColumn} />
           );
         })}
         {/* Column for creating */}
-        <ColumnCreate onCreate={handlerAddColumn} />
+        <ColumnCreate onCreate={AddColumn} deskId={desk.id} />
       </Gallery>
     </>
   );
+};
+
+Columns.propTypes = {
+  goBack: PropTypes.func.isRequired,
+  setColumns: PropTypes.func.isRequired,
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      deskId: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  removeColumn: PropTypes.func.isRequired,
+  AddColumn: PropTypes.func.isRequired,
+  desk: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }),
 };
 
 export default Columns;
