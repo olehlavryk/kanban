@@ -2,18 +2,11 @@ import React from "react";
 import firebase from "firebase/app";
 import PropTypes from "prop-types";
 import CreateForm from "./../../Form/CreateForm/CreateForm";
+import { deskCreate } from "./../../../api/actions/index";
 
 const DeskCreate = ({ onCreate }) => {
   const handleCreateDesk = (name) => {
-    // create new desk
-    // TODO move to API layer
-    const db = firebase.firestore();
-    return db
-      .collection("desks")
-      .add({
-        name,
-      })
-      .then((docRef) => docRef.get())
+    return deskCreate(name)
       .then((doc) => {
         return onCreate({
           id: doc.id,

@@ -2,26 +2,11 @@ import React, { useEffect } from "react";
 import { CardGrid, Spinner } from "@vkontakte/vkui";
 import PropTypes from "prop-types";
 import DeskItem from "../DeskItem/DeskItem";
-import firebase from "firebase/app";
+import { getDesks } from "./../../../api/actions/index";
 
 const DeskList = ({ desks, onDelete, onLoadDesks, onDeskClick }) => {
   useEffect(() => {
-    // todo move to API layer
-    const db = firebase.firestore();
-    db.collection("desks")
-      .get()
-      .then((querySnapshot) => {
-        const desks = [];
-
-        querySnapshot.forEach((desk) => {
-          desks.push({
-            id: desk.id,
-            name: desk.data().name,
-          });
-        });
-
-        onLoadDesks(desks);
-      });
+    getDesks().then((desks) => onLoadDesks(desks));
   }, [onLoadDesks]);
 
   if (!desks.length) {

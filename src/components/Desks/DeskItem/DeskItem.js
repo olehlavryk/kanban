@@ -2,20 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Card, Div, Button } from "@vkontakte/vkui";
 import "./DeskItem.css";
-import firebase from "firebase/app";
+import { deleteDesk } from "./../../../api/actions/index";
 
 const DeskItem = ({ id, children, onDelete, onClick }) => {
   const deleteItem = (event, id) => {
     if (event) {
       event.preventDefault();
+      event.stopPropagation();
     }
-
-    // todo move removing to API layer
-    const db = firebase.firestore();
-
-    db.collection("desks")
-      .doc(id)
-      .delete()
+    deleteDesk(id)
       .then(() => onDelete(id))
       .catch(console.error);
   };
