@@ -10,30 +10,26 @@ const panel = {
 };
 
 const App = () => {
-  const [activePanel, setActivePanel] = useState(panel.desks);
-  const [activeDesk, setActiveDesk] = useState(null);
+  // Desks
+  const {
+    desks,
+    handlerAddDesk,
+    handlerRemoveDesk,
+    setDesks,
+  } = useDesksState();
 
-  const goToColumns = (deskId) => {
-    setActiveDesk(desks.find(({ id }) => id === deskId));
-    setActivePanel(panel.columns);
-  };
-  const goToDesks = () => setActivePanel(panel.desks);
+  // Columns
+  const {
+    columns,
+    handlerAddColumn,
+    handlerRemoveColumn,
+    setColumns,
+  } = useColumnsState();
 
-  // desks
-  const [desks, setDesks] = useState([]);
-
-  const handlerAddDesk = (desk) => setDesks([...desks, desk]);
-  const handlerRemoveDesk = (deskId) => {
-    setDesks(desks.filter(({ id }) => id !== deskId));
-  };
-
-  // columns
-  const [columns, setColumns] = useState([]);
-
-  const handlerAddColumn = (column) => setColumns([...columns, column]);
-  const handlerRemoveColumn = (columnId) => {
-    setColumns(columns.filter(({ id }) => id !== columnId));
-  };
+  // App
+  const { activePanel, activeDesk, goToColumns, goToDesks } = useAppState(
+    desks
+  );
 
   return (
     <View activePanel={activePanel}>
@@ -60,6 +56,41 @@ const App = () => {
       </Panel>
     </View>
   );
+};
+
+const useAppState = (desks) => {
+  const [activePanel, setActivePanel] = useState(panel.desks);
+  const [activeDesk, setActiveDesk] = useState(null);
+
+  const goToColumns = (deskId) => {
+    setActiveDesk(desks.find(({ id }) => id === deskId));
+    setActivePanel(panel.columns);
+  };
+  const goToDesks = () => setActivePanel(panel.desks);
+
+  return { activePanel, activeDesk, goToColumns, goToDesks };
+};
+
+const useDesksState = () => {
+  const [desks, setDesks] = useState([]);
+
+  const handlerAddDesk = (desk) => setDesks([...desks, desk]);
+  const handlerRemoveDesk = (deskId) => {
+    setDesks(desks.filter(({ id }) => id !== deskId));
+  };
+
+  return { desks, handlerAddDesk, handlerRemoveDesk, setDesks };
+};
+
+const useColumnsState = () => {
+  const [columns, setColumns] = useState([]);
+
+  const handlerAddColumn = (column) => setColumns([...columns, column]);
+  const handlerRemoveColumn = (columnId) => {
+    setColumns(columns.filter(({ id }) => id !== columnId));
+  };
+
+  return { columns, handlerAddColumn, handlerRemoveColumn, setColumns };
 };
 
 export default App;
