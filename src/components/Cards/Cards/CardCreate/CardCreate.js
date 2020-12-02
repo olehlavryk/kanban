@@ -1,20 +1,11 @@
 import React from "react";
-import firebase from "firebase/app";
 import PropTypes from "prop-types";
 import CreateForm from "../../../Form/CreateForm/CreateForm";
+import { cardCreate } from "src/api/actions/index";
 
 const CardCreate = ({ onCreate, style, columnId }) => {
-  const handleCreateDesk = (name) => {
-    // create new desk
-    // TODO move to API layer
-    const db = firebase.firestore();
-    return db
-      .collection("cards")
-      .add({
-        name,
-        columnId,
-      })
-      .then((docRef) => docRef.get())
+  const createItem = (name) => {
+    return cardCreate(name, columnId)
       .then((doc) => {
         return onCreate({
           id: doc.id,
@@ -28,7 +19,7 @@ const CardCreate = ({ onCreate, style, columnId }) => {
 
   return (
     <CreateForm
-      onSubmit={handleCreateDesk}
+      onSubmit={createItem}
       placeholder="Enter card name"
       actionTitle="Create Card"
       style={style}

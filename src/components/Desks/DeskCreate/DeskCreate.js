@@ -1,5 +1,4 @@
 import React from "react";
-import firebase from "firebase/app";
 import PropTypes from "prop-types";
 import CreateForm from "./../../Form/CreateForm/CreateForm";
 import { deskCreate } from "./../../../api/actions/index";

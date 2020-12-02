@@ -1,20 +1,18 @@
 import React from "react";
 import { CardGrid, Card, Header, Button } from "@vkontakte/vkui";
 import PropTypes from "prop-types";
-import firebase from "firebase/app";
 import Cards from "../../Cards/Cards/Cards";
 import "./Column.css";
+import { deleteColumn } from "src/api/actions/index";
 
 const Column = ({ id, name, onDelete }) => {
-  const deleteColumn = (event, id) => {
-    if (event) event.preventDefault();
+  const deleteItem = (event, id) => {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
-    // todo move removing to API layer
-    const db = firebase.firestore();
-
-    db.collection("columns")
-      .doc(id)
-      .delete()
+    deleteColumn(id)
       .then(() => onDelete(id))
       .catch(console.error);
   };
@@ -25,11 +23,7 @@ const Column = ({ id, name, onDelete }) => {
         <Card size="l" className="Column">
           <div className="Column__header">
             <Header mode="secondary">{name}</Header>
-            <Button
-              mode="tertiary"
-              size="l"
-              onClick={(e) => deleteColumn(e, id)}
-            >
+            <Button mode="tertiary" size="l" onClick={(e) => deleteItem(e, id)}>
               x
             </Button>
           </div>

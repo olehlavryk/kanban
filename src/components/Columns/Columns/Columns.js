@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { PanelHeader, PanelHeaderBack, Gallery } from "@vkontakte/vkui";
 import PropTypes from "prop-types";
-import firebase from "firebase/app";
 import Column from "./../Column/Column";
 import ColumnCreate from "./../ColumnCreate/ColumnCreate";
+import { getColumns } from "./../../../api/actions/index";
 
 const Columns = ({
   goBack,
@@ -14,30 +14,8 @@ const Columns = ({
   desk,
 }) => {
   useEffect(() => {
-    // todo move to API layer
-    const db = firebase.firestore();
-
-    db.collection("columns")
-      .where("deskId", "==", desk.id)
-      .get()
-      .then((querySnapshot) => {
-        const columns = [];
-
-        querySnapshot.forEach((desk) => {
-          const { deskId, name } = desk.data();
-          columns.push({
-            id: desk.id,
-            deskId,
-            name,
-          });
-        });
-
-        setColumns(columns);
-      });
+    getColumns(desk.id).then((columns) => setColumns(columns));
   }, [setColumns, desk.id]);
-
-  // todo case loading
-  // todo case if Columns none
 
   return (
     <>

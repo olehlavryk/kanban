@@ -1,23 +1,14 @@
 import React from "react";
-import firebase from "firebase/app";
 import PropTypes from "prop-types";
 import { Div } from "@vkontakte/vkui";
 import CreateForm from "../../Form/CreateForm/CreateForm";
+import { createColumn } from "src/api/actions/index";
 
 const ColumnCreate = ({ onCreate, deskId }) => {
-  const handleCreateColumn = (name) => {
-    // create new desk
-    // TODO move to API layer
-    const db = firebase.firestore();
-    return db
-      .collection("columns")
-      .add({
-        name,
-        deskId,
-      })
-      .then((docRef) => docRef.get())
+  const createItem = (name) => {
+    return createColumn(name, deskId)
       .then((doc) => {
-        return onCreate({
+        onCreate({
           id: doc.id,
           ...doc.data(),
         });
@@ -30,7 +21,7 @@ const ColumnCreate = ({ onCreate, deskId }) => {
   return (
     <Div style={{ boxSizing: "border-box" }}>
       <CreateForm
-        onSubmit={handleCreateColumn}
+        onSubmit={createItem}
         placeholder="Enter column name"
         actionTitle="Create column"
       />

@@ -1,19 +1,17 @@
 import React from "react";
 import { Card as Ticket, Div, Button } from "@vkontakte/vkui";
 import PropTypes from "prop-types";
-import firebase from "firebase/app";
+import { deleteCard } from "src/api/actions/index";
 import "./Card.css";
 
 const Card = ({ children, id, onDelete }) => {
-  const deleteCard = (event, id) => {
-    if (event) event.preventDefault();
+  const deleteItem = (event, id) => {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
-    // todo move removing to API layer
-    const db = firebase.firestore();
-
-    db.collection("cards")
-      .doc(id)
-      .delete()
+    deleteCard(id)
       .then(() => onDelete(id))
       .catch(console.error);
   };
@@ -22,7 +20,7 @@ const Card = ({ children, id, onDelete }) => {
     <Ticket size="l" mode="outline" className="ColumnCard">
       <div className="ColumnCard__wrapper">
         <Div>{children}</Div>
-        <Button mode="tertiary" size="l" onClick={(e) => deleteCard(e, id)}>
+        <Button mode="tertiary" size="l" onClick={(e) => deleteItem(e, id)}>
           x
         </Button>
       </div>

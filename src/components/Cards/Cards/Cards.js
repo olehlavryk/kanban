@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import firebase from "firebase/app";
 import Card from "./../Card/Card";
 import PropTypes from "prop-types";
 import CardCreate from "./CardCreate/CardCreate";
+import { getCards } from "src/api/actions";
 
 const Cards = ({ columnId }) => {
   const [cards, setCards] = useState([]);
@@ -12,26 +12,7 @@ const Cards = ({ columnId }) => {
   };
 
   useEffect(() => {
-    // todo move to API layer
-    const db = firebase.firestore();
-
-    db.collection("cards")
-      .where("columnId", "==", columnId)
-      .get()
-      .then((querySnapshot) => {
-        const cards = [];
-
-        querySnapshot.forEach((desk) => {
-          const { columnId, name } = desk.data();
-          cards.push({
-            id: desk.id,
-            columnId,
-            name,
-          });
-        });
-
-        setCards(cards);
-      });
+    getCards(columnId).then((cards) => setCards(cards));
   }, [columnId]);
 
   return (
