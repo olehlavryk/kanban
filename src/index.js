@@ -2,7 +2,7 @@ import "core-js/features/map";
 import "core-js/features/set";
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./components/App";
+import App from "./components/App/App";
 import * as backend from "./api/actions/index";
 
 // Backend Init

@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { CardGrid, Spinner } from "@vkontakte/vkui";
-import PropTypes from "prop-types";
 import DeskItem from "../DeskItem/DeskItem";
 import { getDesks } from "./../../../api/actions/index";
+import Context from "src/components/App/context";
 
-const DeskList = ({ desks, onDelete, onLoadDesks, onDeskClick }) => {
+const DeskList = () => {
+  const { onChangePanel, setDesks, desks } = useContext(Context);
+
   useEffect(() => {
-    getDesks().then((desks) => onLoadDesks(desks));
-  }, [onLoadDesks]);
+    getDesks().then((desks) => setDesks(desks));
+  }, [setDesks]);
 
   if (!desks.length) {
     return <Spinner size="medium" style={{ marginTop: 20 }} />;
@@ -16,28 +18,12 @@ const DeskList = ({ desks, onDelete, onLoadDesks, onDeskClick }) => {
   return (
     <CardGrid>
       {desks.map(({ id, name }) => (
-        <DeskItem
-          key={id}
-          {...{ id, onDelete }}
-          onClick={() => onDeskClick(id)}
-        >
+        <DeskItem key={id} {...{ id }} onClick={() => onChangePanel(id)}>
           {name}
         </DeskItem>
       ))}
     </CardGrid>
   );
-};
-
-DeskList.propTypes = {
-  desks: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onLoadDesks: PropTypes.func.isRequired,
-  onDeskClick: PropTypes.func.isRequired,
 };
 
 export default DeskList;
