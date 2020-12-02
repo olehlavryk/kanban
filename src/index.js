@@ -3,7 +3,7 @@ import "core-js/features/set";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
-import * as backend from "./models/firebase";
+import * as backend from "./api/actions/index";
 
 // Backend Init
 backend.initialize();
