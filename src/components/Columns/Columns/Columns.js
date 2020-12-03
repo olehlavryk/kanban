@@ -4,6 +4,7 @@ import Column from "./../Column/Column";
 import ColumnCreate from "./../ColumnCreate/ColumnCreate";
 import { getColumns } from "./../../../api/actions/index";
 import Context from "src/components/App/context";
+import "./Columns.css";
 
 const Columns = () => {
   const { goToDesks, setColumns, columns, activeDesk } = useContext(Context);
@@ -18,11 +19,7 @@ const Columns = () => {
         {activeDesk.name}
       </PanelHeader>
 
-      <Gallery
-        slideWidth="100%"
-        align="left"
-        style={{ height: "100%", marginTop: 20 }}
-      >
+      <Gallery slideWidth="100%" align="left" className="Columns__list">
         {columns.map(({ id, name }) => {
           return <Column key={id} name={name} id={id} />;
         })}
