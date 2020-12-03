@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import CreateForm from "../../../Form/CreateForm/CreateForm";
 import { cardCreate } from "src/api/actions/index";
+import Context from "src/components/App/context";
 
-const CardCreate = ({ onCreate, style, columnId }) => {
+const CardCreate = ({ style, columnId }) => {
+  const { handlerAddCard } = useContext(Context);
+
   const createItem = (name) => {
     return cardCreate(name, columnId)
       .then((doc) => {
-        return onCreate({
+        return handlerAddCard({
           id: doc.id,
           ...doc.data(),
         });
@@ -28,7 +31,6 @@ const CardCreate = ({ onCreate, style, columnId }) => {
 };
 
 CardCreate.propTypes = {
-  onCreate: PropTypes.func.isRequired,
   style: PropTypes.object,
   columnId: PropTypes.string.isRequired,
 };

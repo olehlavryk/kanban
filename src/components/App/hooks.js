@@ -36,19 +36,26 @@ const useColumnsState = () => {
   return { columns, handlerAddColumn, handlerRemoveColumn, setColumns };
 };
 
+const useCardsState = () => {
+  const [cards, setCards] = useState([]);
+  const handlerAddCard = (card) => setCards([...cards, card]);
+  const handlerRemoveCard = (cardId) => {
+    setCards(cards.filter(({ id }) => id !== cardId));
+  };
+
+  return { cards, setCards, handlerAddCard, handlerRemoveCard };
+};
+
 export const useAppState = () => {
-  // Desks
   const desksState = useDesksState();
-
-  // Columns
   const columnsState = useColumnsState();
-
-  // Nav
   const navState = useNavState(desksState.desks);
+  const cardsState = useCardsState();
 
   return {
     ...desksState,
     ...columnsState,
     ...navState,
+    ...cardsState,
   };
 };

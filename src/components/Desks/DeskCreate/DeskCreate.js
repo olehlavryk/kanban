@@ -4,12 +4,12 @@ import { deskCreate } from "./../../../api/actions/index";
 import Context from "src/components/App/context";
 
 const DeskCreate = () => {
-  const { addDesk } = useContext(Context);
+  const { handlerAddDesk } = useContext(Context);
 
   const handleCreateDesk = (name) => {
     return deskCreate(name)
       .then((doc) => {
-        return addDesk({
+        return handlerAddDesk({
           id: doc.id,
           ...doc.data(),
         });

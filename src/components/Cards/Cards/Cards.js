@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import Card from "./../Card/Card";
 import PropTypes from "prop-types";
 import CardCreate from "./CardCreate/CardCreate";
 import { getCards } from "src/api/actions";
+import Context from "src/components/App/context";
 
 const Cards = ({ columnId }) => {
-  const [cards, setCards] = useState([]);
-  const handlerAddCard = (card) => setCards([...cards, card]);
-  const handlerRemoveCard = (cardId) => {
-    setCards(cards.filter(({ id }) => id !== cardId));
-  };
+  const { cards, setCards } = useContext(Context);
 
   useEffect(() => {
     getCards(columnId).then((cards) => setCards(cards));
@@ -18,7 +15,7 @@ const Cards = ({ columnId }) => {
   return (
     <>
       {cards.map(({ id, name }) => (
-        <Card key={id} id={id} onDelete={handlerRemoveCard}>
+        <Card key={id} id={id}>
           {name}
         </Card>
       ))}
@@ -26,7 +23,6 @@ const Cards = ({ columnId }) => {
       <CardCreate
         columnId={columnId}
         style={{ marginTop: 10, display: "inline-block" }}
-        onCreate={handlerAddCard}
       />
     </>
   );

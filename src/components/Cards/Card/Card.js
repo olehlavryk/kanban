@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card as Ticket, Div, Button } from "@vkontakte/vkui";
 import PropTypes from "prop-types";
 import { deleteCard } from "src/api/actions/index";
 import "./Card.css";
+import Context from "src/components/App/context";
 
-const Card = ({ children, id, onDelete }) => {
+const Card = ({ children, id }) => {
+  const { handlerRemoveCard } = useContext(Context);
+
   const deleteItem = (event, id) => {
     if (event) {
       event.preventDefault();
@@ -12,7 +15,7 @@ const Card = ({ children, id, onDelete }) => {
     }
 
     deleteCard(id)
-      .then(() => onDelete(id))
+      .then(() => handlerRemoveCard(id))
       .catch(console.error);
   };
 
@@ -31,7 +34,6 @@ const Card = ({ children, id, onDelete }) => {
 Card.propTypes = {
   id: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
-  onDelete: PropTypes.func.isRequired,
 };
 
 export default Card;

@@ -6,8 +6,7 @@ import { deleteDesk } from "./../../../api/actions/index";
 import Context from "src/components/App/context";
 
 const DeskItem = ({ id, children }) => {
-  const { onChangePanel, handlerRemoveDesk } = useContext(Context);
-  const state = useContext(Context);
+  const { goToColumns, handlerRemoveDesk } = useContext(Context);
 
   const deleteItem = (event, id) => {
     if (event) {
@@ -19,7 +18,7 @@ const DeskItem = ({ id, children }) => {
       .catch(console.error);
   };
 
-  const goToColumnPanel = () => onChangePanel(id);
+  const goToColumnPanel = () => goToColumns(id);
 
   return (
     <Card size="l" onClick={goToColumnPanel}>

@@ -8,8 +8,6 @@ const DeskList = () => {
   const { setDesks, desks } = useContext(Context);
   const state = useContext(Context);
 
-  console.log(state);
-
   useEffect(() => {
     getDesks().then((desks) => setDesks(desks));
   }, [setDesks]);
