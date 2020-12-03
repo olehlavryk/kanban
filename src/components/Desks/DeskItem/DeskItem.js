@@ -5,8 +5,9 @@ import "./DeskItem.css";
 import { deleteDesk } from "./../../../api/actions/index";
 import Context from "src/components/App/context";
 
-const DeskItem = ({ id, children, onClick }) => {
-  const { handlerRemoveDesk } = useContext(Context);
+const DeskItem = ({ id, children }) => {
+  const { onChangePanel, handlerRemoveDesk } = useContext(Context);
+  const state = useContext(Context);
 
   const deleteItem = (event, id) => {
     if (event) {
@@ -18,8 +19,10 @@ const DeskItem = ({ id, children, onClick }) => {
       .catch(console.error);
   };
 
+  const goToColumnPanel = () => onChangePanel(id);
+
   return (
-    <Card size="l" onClick={onClick}>
+    <Card size="l" onClick={goToColumnPanel}>
       <Div className="DeskItem">
         {children}
         <Button mode="tertiary" size="l" onClick={(e) => deleteItem(e, id)}>
@@ -36,7 +39,6 @@ DeskItem.propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
-  onClick: PropTypes.func.isRequired,
 };
 
 export default DeskItem;

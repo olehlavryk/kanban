@@ -5,7 +5,10 @@ import { getDesks } from "./../../../api/actions/index";
 import Context from "src/components/App/context";
 
 const DeskList = () => {
-  const { onChangePanel, setDesks, desks } = useContext(Context);
+  const { setDesks, desks } = useContext(Context);
+  const state = useContext(Context);
+
+  console.log(state);
 
   useEffect(() => {
     getDesks().then((desks) => setDesks(desks));
@@ -18,7 +21,7 @@ const DeskList = () => {
   return (
     <CardGrid>
       {desks.map(({ id, name }) => (
-        <DeskItem key={id} {...{ id }} onClick={() => onChangePanel(id)}>
+        <DeskItem key={id} {...{ id }}>
           {name}
         </DeskItem>
       ))}

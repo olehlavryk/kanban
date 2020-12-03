@@ -3,7 +3,7 @@ import { PanelHeader, Div } from "@vkontakte/vkui";
 import DeskList from "../DeskList/DeskList";
 import DeskCreate from "../DeskCreate/DeskCreate";
 
-const Desks = ({ desks }) => {
+const Desks = () => {
   return (
     <>
       <PanelHeader>My Desks</PanelHeader>
