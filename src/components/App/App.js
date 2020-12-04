@@ -14,7 +14,7 @@ const App = () => {
   return (
     <ErrorBoundary>
       <Context.Provider value={state}>
-        <View activePanel={state.activePanel}>
+        <View activePanel={state.activePanel} popout={state.popout}>
           <Panel id={panel.desks}>
             <Desks />
           </Panel>

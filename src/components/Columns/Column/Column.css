@@ -8,6 +8,7 @@
 
 .Column {
   padding: 0 0 10px 0;
+  background-color: var(--control_background);
 }
 
 .Column__header {
