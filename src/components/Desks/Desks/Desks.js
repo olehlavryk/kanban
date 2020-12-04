@@ -7,7 +7,6 @@ const Desks = () => {
   return (
     <>
       <PanelHeader>My Desks</PanelHeader>
-
       <Div>
         <DeskCreate />
       </Div>

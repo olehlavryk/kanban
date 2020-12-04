@@ -6,7 +6,6 @@ import Context from "src/components/App/context";
 
 const DeskList = () => {
   const { setDesks, desks } = useContext(Context);
-  const state = useContext(Context);
 
   useEffect(() => {
     getDesks().then((desks) => setDesks(desks));
